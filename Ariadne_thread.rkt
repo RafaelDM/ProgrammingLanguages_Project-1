@@ -1,5 +1,5 @@
 ;Daniel Atilano
-;Rafael Díaz
+;Rafael Medina
 ;4/12/2020
 ;Final Project
 
@@ -19,41 +19,37 @@
 
 ;----Debemos de hacer una función pa cada uno y luego la función
 ;--Que busca el true y false y es con lo que 
-
+;**** Find the 0 in a list and change to 2
+(define (test data)
+    (if (list? data)
+        (map(lambda (lst) (test lst))data)
+        (if (equal? data "0")
+            "2"
+            data)))
+;**** Replace 0 to 2 in our TopWall
 (define (findUpper maze)
-    (define upperRow (car (read-maze maze)))
-    (if (list? (member "0" upperRow))
-    #t
-    #f
-    ));* Read Upper Column
+    (test (car (read-maze maze))))
 
+;**** Replace 0 to 2 in our bottomWall
 (define (findLow maze)
-    (define lowRow (last (read-maze maze)))
-    (list? lowRow))
-;(map (λ (square) (if (eq? square "0") "2" square)) lowRow))
+    (test (last (read-maze maze))))
 
-(define (test)
-    (define data '("1" "0"))
-    (map (λ (square) (if (eq? square "0") "2" square)) data)
-    (list? data))
-
+;**** Replace 0 to 2 in our leftWall
 (define (findLeft maze)
     (let loop
         ([line empty]
         [left<-column empty]
         [maze (read-maze maze)])
         (if (empty? maze)
-            left<-column
-            (loop (car maze) (append left<-column (list (car (car maze)))) (cdr maze))))) ;* reads Left column
+            (test left<-column)
+            (loop (car maze) (append left<-column (list (car (car maze)))) (cdr maze))))) 
 
+;***** Replace 0 to 2 in our rightWall
 (define (findRight maze)
     (let loop
         ([line empty]
         [right<-column empty]
         [maze (read-maze maze)])
         (if (empty? maze)
-            right<-column
-            (loop (last maze) (append right<-column (list (last (car maze)))) (cdr maze))))) ;* Read Right Column
-
-
-
+            (test right<-column)
+            (loop (last maze) (append right<-column (list (last (car maze)))) (cdr maze))))) 

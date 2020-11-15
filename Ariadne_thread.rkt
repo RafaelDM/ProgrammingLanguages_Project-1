@@ -5,6 +5,7 @@
 
 #lang racket
 
+;** Read our maze line by line in Rows
 (define (read-maze filename)
     (define in (open-input-file filename))
         (let loop
@@ -15,6 +16,13 @@
                 [(eof-object? lines) maze] ;call function
                 [else 
                     (loop (read-line in 'any) (append maze (for/list () (string-split lines " "))) (add1 size))])))
+
+;** Read our Maze in columns
+(define (columnMaze maze)
+    (define columnList(read-maze maze))
+    (for/list ((i (length (list-ref columnList 0))))
+        (for/list ((il columnList))
+            (list-ref il i))))
 
 ;----Debemos de hacer una función pa cada uno y luego la función
 ;--Que busca el true y false y es con lo que 
@@ -35,23 +43,12 @@
 
 ;**** Replace 0 to 2 in our leftWall
 (define (findLeft maze)
-    (let loop
-        ([line empty]
-        [left<-column empty]
-        [maze (read-maze maze)])
-        (if (empty? maze)
-            (test left<-column)
-            (loop (car maze) (append left<-column (list (car (car maze)))) (cdr maze))))) 
+    (test (car (columnMaze maze))))
 
 ;***** Replace 0 to 2 in our rightWall
 (define (findRight maze)
-    (let loop
-        ([line empty]
-        [right<-column empty]
-        [maze (read-maze maze)])
-        (if (empty? maze)
-            (test right<-column)
-            (loop (last maze) (append right<-column (list (last (car maze)))) (cdr maze))))) 
+    (test (last (columnMaze maze))))
+
             
 ;***** Function to check what is the column with 2
 (define (checker data)
@@ -71,6 +68,13 @@
 ;* O lo que podríamos hacer es tener dos Reader de Maze, pero ahora ir envertidos! para construirla al revez
 
 ;! Esta Funcion da problemas porque solo imprime el primer caso y ya, necesitamos que evalue todas e imprima 2
+
+
+
+
+
+
+;& Almost trash but here to use if the others functions doesn't work
 #|
 (define (newMaze maze)
     (cond
@@ -80,3 +84,22 @@
     ((eq? (checker(findLeft maze)) #t)(findLeft maze))
     ))
     |#
+#|
+(define (findLeft maze)
+    (let loop
+        ([line empty]
+        [left<-column empty]
+        [maze (read-maze maze)])
+        (if (empty? maze)
+            (test left<-column)
+            (loop (car maze) (append left<-column (list (car (car maze)))) (cdr maze))))) 
+
+(define (findRight maze)
+    (let loop
+        ([line empty]
+        [right<-column empty]
+        [maze (read-maze maze)])
+        (if (empty? maze)
+            (test right<-column)
+            (loop (last maze) (append right<-column (list (last (car maze)))) (cdr maze))))) 
+|#

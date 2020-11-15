@@ -16,7 +16,6 @@
                 [else 
                     (loop (read-line in 'any) (append maze (for/list () (string-split lines " "))) (add1 size))])))
 
-
 ;----Debemos de hacer una función pa cada uno y luego la función
 ;--Que busca el true y false y es con lo que 
 ;**** Find the 0 in a list and change to 2
@@ -53,3 +52,31 @@
         (if (empty? maze)
             (test right<-column)
             (loop (last maze) (append right<-column (list (last (car maze)))) (cdr maze))))) 
+            
+;***** Function to check what is the column with 2
+(define (checker data)
+    (if(list? (member "2" data))
+    #t
+    #f
+    ))
+
+;--Debemos de hacer una función que evalue los cuatro casos para saber cual cambio
+;--Despues de saber cual cambio vamos a tomar la nueva lista con 2 y la vamos a pegar donde estaban los 0
+
+;* Creo que tal vez debemos de hacer un loop que cuente hasta 4 y que vaya evaluando en cada iteración un lado diferente
+;* En caso de que le toque un t entonces agarra de donde viene el true y cambia la nueva lista por la vieja
+;* para eso estaba pensando en usar una función parecida a nuestro test pero que ahora funcione con las listas
+;* en el caso de Nuestra pared superior e inferior funcionaría esa
+;* en el caso de nuestra pared izquierda y derecha no funcionaria, tendriamos que iterar de otra manera
+;* O lo que podríamos hacer es tener dos Reader de Maze, pero ahora ir envertidos! para construirla al revez
+
+;! Esta Funcion da problemas porque solo imprime el primer caso y ya, necesitamos que evalue todas e imprima 2
+#|
+(define (newMaze maze)
+    (cond
+    ((eq? (checker(findUpper maze)) #t)(findUpper maze))
+    ((eq? (checker(findRight maze)) #t)(findRight maze))
+    ((eq? (checker(findLow maze)) #t)(findLow maze))
+    ((eq? (checker(findLeft maze)) #t)(findLeft maze))
+    ))
+    |#

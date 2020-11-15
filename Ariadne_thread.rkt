@@ -5,6 +5,20 @@
 
 #lang racket
 
+;---------Create the New Maze is like our main xD
+;***** Change Lines of the list of list to new lines with 2
+(define (newMaze maze)
+    (define upperMaze(repl (car(read-maze maze)) (findUpper maze) (read-maze maze)))
+    (define lowMaze(repl (last(read-maze maze)) (findLow maze) upperMaze))
+    (list->file lowMaze "maze2.txt")
+    (define leftMaze(repl (car(columnMaze "maze2.txt")) (findLeft "maze2.txt") (columnMaze "maze2.txt")))
+    (define rightMaze(repl (last(columnMaze "maze2.txt")) (findRight "maze2.txt") leftMaze))
+    (list->file rightMaze "maze2.txt")
+    (define toTree (list->file (columnMaze "maze2.txt") "fMaze.txt"))
+    (read-maze "fMaze.txt"))
+    ;! (flatten(read-maze "fMaze.txt")) esto hace una sola lista la lista de listas
+
+;*******************- Read Maze *****************************************
 ;** Read our maze line by line in Rows
 (define (read-maze filename)
     (define in (open-input-file filename))
@@ -24,8 +38,21 @@
         (for/list ((il columnList))
             (list-ref il i))))
 
-;----Debemos de hacer una función pa cada uno y luego la función
-;--Que busca el true y false y es con lo que 
+;*************************************************************************************************************-
+;******************Output maze to file
+(define (list->file lst path)
+  (let loop ([clone lst] [out (open-output-file path #:exists 'replace)])
+    (if (empty? clone)
+        (close-output-port out)
+        (begin
+          (for ([i (in-range (length (first clone)))])
+            (display (list-ref (first clone) i) out)
+            (when (< (+ i 1) (length (first clone))) (display " " out)))
+          (unless (empty? (rest clone)) (display "\n" out))
+          (loop (rest clone) out)))))
+;-----------------------------------------------------------------------------*
+
+;*******************- Functions to change elements **************************************
 ;**** Find the 0 in a list and change to 2
 (define (test data)
     (if (list? data)
@@ -33,10 +60,21 @@
         (if (equal? data "0")
             "2"
             data)))
+;!!!!!!!
+;******* Tenemos un error con esta fucnión, si tenemos filas identicas a la entrada o salida igual les pone un dos
+;!!!!!!!
+(define (repl oldElement newElement origMaze)
+  (cond
+        ((null? origMaze) origMaze)
+        ((equal? oldElement origMaze) newElement)
+        ((pair? origMaze) (cons (repl oldElement newElement (first origMaze))(repl oldElement newElement (rest origMaze))))
+        (else origMaze)))
+;**********************************************************************************************-
+
+;-------------------Functions to get the list with the answer
 ;**** Replace 0 to 2 in our TopWall
 (define (findUpper maze)
     (test (car (read-maze maze))))
-
 ;**** Replace 0 to 2 in our bottomWall
 (define (findLow maze)
     (test (last (read-maze maze))))
@@ -48,34 +86,15 @@
 ;***** Replace 0 to 2 in our rightWall
 (define (findRight maze)
     (test (last (columnMaze maze))))
-
-            
-;***** Function to check what is the column with 2
-(define (checker data)
-    (if(list? (member "2" data))
-    #t
-    #f
-    ))
-
-;--Debemos de hacer una función que evalue los cuatro casos para saber cual cambio
-;--Despues de saber cual cambio vamos a tomar la nueva lista con 2 y la vamos a pegar donde estaban los 0
-
-;* Creo que tal vez debemos de hacer un loop que cuente hasta 4 y que vaya evaluando en cada iteración un lado diferente
-;* En caso de que le toque un t entonces agarra de donde viene el true y cambia la nueva lista por la vieja
-;* para eso estaba pensando en usar una función parecida a nuestro test pero que ahora funcione con las listas
-;* en el caso de Nuestra pared superior e inferior funcionaría esa
-;* en el caso de nuestra pared izquierda y derecha no funcionaria, tendriamos que iterar de otra manera
-;* O lo que podríamos hacer es tener dos Reader de Maze, pero ahora ir envertidos! para construirla al revez
-
-;! Esta Funcion da problemas porque solo imprime el primer caso y ya, necesitamos que evalue todas e imprima 2
-
-
-
-
+;----------------------------------------------------------------------
 
 
 ;& Almost trash but here to use if the others functions doesn't work
 #|
+
+(define(changer maze)
+    (changeLines (columnMaze maze) (findRight maze) (last (columnMaze maze))))
+
 (define (newMaze maze)
     (cond
     ((eq? (checker(findUpper maze)) #t)(findUpper maze))
@@ -83,8 +102,7 @@
     ((eq? (checker(findLow maze)) #t)(findLow maze))
     ((eq? (checker(findLeft maze)) #t)(findLeft maze))
     ))
-    |#
-#|
+
 (define (findLeft maze)
     (let loop
         ([line empty]

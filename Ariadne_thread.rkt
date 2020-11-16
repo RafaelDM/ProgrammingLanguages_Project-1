@@ -8,15 +8,14 @@
 ;---------Create the New Maze is like our main xD
 ;***** Change Lines of the list of list to new lines with 2
 (define (newMaze maze)
-    (define upperMaze(repl (car(read-maze maze)) (findUpper maze) (read-maze maze)))
-    (define lowMaze(repl (last(read-maze maze)) (findLow maze) upperMaze))
+    (define upperMaze (append (list (findUpper maze))(remove (car (read-maze maze)) (read-maze maze))))
+    (define lowMaze (append (remove (last upperMaze) upperMaze) (list (findLow maze))))
     (list->file lowMaze "maze2.txt")
-    (define leftMaze(repl (car(columnMaze "maze2.txt")) (findLeft "maze2.txt") (columnMaze "maze2.txt")))
-    (define rightMaze(repl (last(columnMaze "maze2.txt")) (findRight "maze2.txt") leftMaze))
+    (define leftMaze (append (list (findLeft "maze2.txt"))(remove (car (columnMaze "maze2.txt")) (columnMaze "maze2.txt"))))
+    (define rightMaze (append (remove (last leftMaze) leftMaze) (list (findRight "maze2.txt"))))
     (list->file rightMaze "maze2.txt")
     (define toTree (list->file (columnMaze "maze2.txt") "fMaze.txt"))
     (read-maze "fMaze.txt"))
-    ;! (flatten(read-maze "fMaze.txt")) esto hace una sola lista la lista de listas
 
 ;*******************- Read Maze *****************************************
 ;** Read our maze line by line in Rows
@@ -50,8 +49,8 @@
             (when (< (+ i 1) (length (first clone))) (display " " out)))
           (unless (empty? (rest clone)) (display "\n" out))
           (loop (rest clone) out)))))
-;-----------------------------------------------------------------------------*
 
+;-----------------------------------------------------------------------------*
 ;*******************- Functions to change elements **************************************
 ;**** Find the 0 in a list and change to 2
 (define (test data)
@@ -60,21 +59,13 @@
         (if (equal? data "0")
             "2"
             data)))
-;!!!!!!!
-;******* Tenemos un error con esta fucnión, si tenemos filas identicas a la entrada o salida igual les pone un dos
-;!!!!!!!
-(define (repl oldElement newElement origMaze)
-  (cond
-        ((null? origMaze) origMaze)
-        ((equal? oldElement origMaze) newElement)
-        ((pair? origMaze) (cons (repl oldElement newElement (first origMaze))(repl oldElement newElement (rest origMaze))))
-        (else origMaze)))
-;**********************************************************************************************-
 
+;**********************************************************************************************-
 ;-------------------Functions to get the list with the answer
 ;**** Replace 0 to 2 in our TopWall
 (define (findUpper maze)
     (test (car (read-maze maze))))
+
 ;**** Replace 0 to 2 in our bottomWall
 (define (findLow maze)
     (test (last (read-maze maze))))
@@ -88,12 +79,8 @@
     (test (last (columnMaze maze))))
 ;----------------------------------------------------------------------
 
-
 ;& Almost trash but here to use if the others functions doesn't work
 #|
-
-(define(changer maze)
-    (changeLines (columnMaze maze) (findRight maze) (last (columnMaze maze))))
 
 (define (newMaze maze)
     (cond
@@ -121,3 +108,15 @@
             (test right<-column)
             (loop (last maze) (append right<-column (list (last (car maze)))) (cdr maze))))) 
 |#
+
+;---Usar el lenght y solo cambiar la ultima o la primera que esta en el length
+
+#|
+(define (repl oldElement newElement origMaze)
+  (cond
+        ((null? origMaze) origMaze)
+        ((equal? oldElement origMaze) newElement)
+        ((pair? origMaze) (cons (repl oldElement newElement (first origMaze))(repl oldElement newElement (rest origMaze))))
+        (else origMaze)))
+        |#
+        

@@ -79,6 +79,33 @@
     (test (last (columnMaze maze))))
 ;----------------------------------------------------------------------
 
+(define (findDoor maze)
+    (define door (list))
+    (cond 
+    [(index-of (last (read-maze maze)) "2")(append door (list (index-of (last (read-maze maze)) "2")(- (length (read-maze maze)) 1)))]
+    [(index-of (car (read-maze maze)) "2")(append door (list  (index-of (car (read-maze maze)) "2") 0))]
+    [(index-of (last (columnMaze maze)) "2")(append door (list (- (length (columnMaze maze)) 1) (index-of (last (columnMaze maze)) "2")))]
+    [(index-of (car (columnMaze maze)) "2")(append door (list 0 (index-of (car (columnMaze maze)) "2")))]
+    ))
+
+
+
+
+;- (index-of '(1 2 3 4) 3)
+;- (length (list "hop" "skip" "jump"))  
+
+;-- La función respuesta debe de encontrar al ultimo nodo que tenga la salida y recibe lo de abajo, debe de remontar la respuesta desde el 2 salida por el papá
+;-- La función de arriba encuentra el camnino e imprime la salida 
+
+;-------(x y)
+;-------(1 4) read-maze Last
+;-------(0 2) columnMaze Car
+;-------(3 0) read-maze Car
+;-------(4 1) columnMaze Last
+
+;-- Respuesta Maze ((0, 0, 2, (2, 5)), (1, 0 , 0, (2,4)), (2, 1, 0, (3,4)), (3, 2, 0, (3,3)), (7, 3, 0, (3,2)), (4, 3, 0, (4,3)), (5, 4, 2, (5,3)))
+
+
 ;& Almost trash but here to use if the others functions doesn't work
 #|
 
@@ -119,4 +146,42 @@
         ((pair? origMaze) (cons (repl oldElement newElement (first origMaze))(repl oldElement newElement (rest origMaze))))
         (else origMaze)))
         |#
-        
+       
+#|
+ if i j = 0{
+        if i j-1 =0 {
+            if (nodoId!= NULL){
+                ya tiene familia ahí dejalo
+            }
+            else{
+                Escribo que este es tu hijo y lo bautizas
+            }
+        }
+        if i j+1=0{
+            if (nodoId!= NULL){
+                ya tiene familia ahí dejalo
+            }
+            else{
+                Escribo que este es tu hijo y lo bautizas
+            }
+        }
+        if i+1 j=0{
+            if (nodoId!= NULL){
+                ya tiene familia ahí dejalo
+            }
+            else{
+                Escribo que este es tu hijo y lo bautizas
+            }
+        }
+        if i-1 j=0{
+            if (nodoId!= NULL){
+                ya tiene familia ahí dejalo
+            }
+            else{
+                Escribo que este es tu hijo y lo bautizas
+            }
+        }
+
+    }
+
+|#

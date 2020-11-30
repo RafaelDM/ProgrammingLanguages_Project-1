@@ -61,7 +61,7 @@
             data)))
 
 ;**********************************************************************************************-
-;-------------------Functions to list-ref the list with the answer
+;-------------------Functions to get the list with the answer
 ;**** Replace 0 to 2 in our TopWall
 (define (findUpper maze)
     (test (car (read-maze maze))))

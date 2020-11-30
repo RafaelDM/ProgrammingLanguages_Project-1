@@ -61,7 +61,7 @@
             data)))
 
 ;**********************************************************************************************-
-;-------------------Functions to get the list with the answer
+;-------------------Functions to list-ref the list with the answer
 ;**** Replace 0 to 2 in our TopWall
 (define (findUpper maze)
     (test (car (read-maze maze))))
@@ -85,11 +85,26 @@
     [(index-of (last (read-maze maze)) "2")(append door (list (index-of (last (read-maze maze)) "2")(- (length (read-maze maze)) 1)))]
     [(index-of (car (read-maze maze)) "2")(append door (list  (index-of (car (read-maze maze)) "2") 0))]
     [(index-of (last (columnMaze maze)) "2")(append door (list (- (length (columnMaze maze)) 1) (index-of (last (columnMaze maze)) "2")))]
-    [(index-of (car (columnMaze maze)) "2")(append door (list 0 (index-of (car (columnMaze maze)) "2")))]
-    ))
+    [(index-of (car (columnMaze maze)) "2")(append door (list 0 (index-of (car (columnMaze maze)) "2")))]))
 
-
-
+#|
+(define dfs (lambda ((read-maze maze) x y)
+    (if (eq? (list-ref maze x y) "2")
+        (print maze)
+        (begin0
+          (cond [(or (eq? (list-ref maze (+ x 1) y) "0")
+                     (string=? (list-ref maze (+ x 1) y) "2"))
+                 (dfs (set maze x y "*") (+ x 1) y)])
+          (cond [(or (eq? (list-ref maze (- x 1) y) "0")
+                     (eq? (list-ref maze (- x 1) y) "2"))
+                 (dfs (set maze x y "*") (- x 1) y)])
+          (cond [(or (eq? (list-ref maze x (+ y 1)) "0")
+                     (eq? (list-ref maze x (+ y 1)) "2"))
+                 (dfs (set maze x y "*") x (+ y 1))])
+          (cond [(or (eq? (list-ref maze x (- y 1)) "0")
+                     (eq? (list-ref maze x (- y 1)) "2"))
+                 (dfs (set maze x y "*") x (- y 1))])))))
+|#
 
 ;- (index-of '(1 2 3 4) 3)
 ;- (length (list "hop" "skip" "jump"))  

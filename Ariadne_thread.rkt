@@ -44,6 +44,21 @@
         (if (empty? rows)  
             (map (λ (x y) (append (list x) y)) (range (length pathsList)) pathsList) ;once each node is assigned x y coordinates, add an ID.
             (loop (cdr rows) (append pathsList (noWalls (car rows) i)) (add1 i)))))
+            
+;function to find coordenates of an entrance 
+(define (findRoot paths size)
+    (define nodes paths)
+    (let loop
+        ([entrance paths]
+        [limits size])
+        (if (empty? entrance)
+            (display "Invalid maze")
+            (if (or (eq? (cadar entrance) limits)  (eq? (cadar entrance) 1)); (eq? (caddar entrance) limits) (eq? (caddar entrance) 1))
+                (maze->tree (car entrance) nodes)
+                (if (or (eq? (caddar entrance) limits)  (eq? (caddar entrance) 1))
+                    (maze->tree (car entrance) nodes)
+                    (loop (cdr entrance) limits))))))
+    
 
 (define (see-nodes maze)
     (define paths (path->nodes maze))

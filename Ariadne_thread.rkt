@@ -5,7 +5,7 @@
 
 #lang racket
 
-;---------Create the New Maze is like our main xD
+
 ;***** Change Lines of the list of list to new lines with 2
 (define (newMaze maze)
     (define upperMaze (append (list (findUpper maze))(remove (car (read-maze maze)) (read-maze maze))))
@@ -29,6 +29,26 @@
                 [(eof-object? lines) maze] ;call function
                 [else 
                     (loop (read-line in 'any) (append maze (for/list () (string-split lines " "))) (add1 size))])))
+                    
+;return lists without walls
+(define (noWalls row i_counter)
+    (for/list ([j row] [j_counter (in-naturals 1)] #:unless (string=? j "1") )  (append (list i_counter) (list j_counter) (list j) )))
+
+
+;build nodes with x y coordinates and ID 
+(define (path->nodes maze)
+    (let loop
+        ([rows (read-maze maze)]
+        [pathsList empty]
+        [i 1])
+        (if (empty? rows)  
+            (map (λ (x y) (append (list x) y)) (range (length pathsList)) pathsList) ;once each node is assigned x y coordinates, add an ID.
+            (loop (cdr rows) (append pathsList (noWalls (car rows) i)) (add1 i)))))
+
+(define (see-nodes maze)
+    (define paths (path->nodes maze))
+     paths)  ;cdddr to read last value of a node
+     
 
 ;** Read our Maze in columns
 (define (columnMaze maze)

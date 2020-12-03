@@ -42,7 +42,7 @@
         [pathsList empty]
         [i 1])
         (if (empty? rows)  
-            (map (λ (x y) (append (list x) y)) (range (length pathsList)) pathsList) ;once each node is assigned x y coordinates, add an ID.
+            (findRoot (map (λ (x y) (append (list x) y)) (range (length pathsList)) pathsList) (sub1 i));once each node is assigned x y coordinates, add an ID.
             (loop (cdr rows) (append pathsList (noWalls (car rows) i)) (add1 i)))))
             
 ;function to find coordenates of an entrance 
@@ -76,10 +76,10 @@
             tree
             ;add neighbors as children
             (cond 
-                [(and (eq? right #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (append (list root) (list (caar leafs)))) left right up down)] ;caar to get ID
-                [(and (eq? left #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (append (list root) (list (caar leafs)))) left right up down)]
-                [(and (eq? up #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (append (list root) (list (caar leafs)))) left right up down)]
-                [(and (eq? down #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (append (list root) (list (caar leafs)))) left right up down)]
+                [(and (eq? right #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (list (append (list root) (list (caar leafs))))) left right up down)] ;caar to get ID
+                [(and (eq? left #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (list (append (list root) (list (caar leafs))))) left right up down)]
+                [(and (eq? up #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (list (append (list root) (list (caar leafs))))) left right up down)]
+                [(and (eq? down #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (list (append (list root) (list (caar leafs))))) left right up down)]
                 [else
                     (cond
                     [(eq? (add1 (cadr root)) (cadar leafs)) (loop root leafs tree #f #t #f #f)] 
@@ -188,7 +188,6 @@
 
 ;& Almost trash but here to use if the others functions doesn't work
 #|
-
 (define (newMaze maze)
     (cond
     ((eq? (checker(findUpper maze)) #t)(findUpper maze))
@@ -196,7 +195,6 @@
     ((eq? (checker(findLow maze)) #t)(findLow maze))
     ((eq? (checker(findLeft maze)) #t)(findLeft maze))
     ))
-
 (define (findLeft maze)
     (let loop
         ([line empty]
@@ -205,7 +203,6 @@
         (if (empty? maze)
             (test left<-column)
             (loop (car maze) (append left<-column (list (car (car maze)))) (cdr maze))))) 
-
 (define (findRight maze)
     (let loop
         ([line empty]
@@ -261,7 +258,5 @@
                 Escribo que este es tu hijo y lo bautizas
             }
         }
-
     }
-
 |#

@@ -58,6 +58,36 @@
                 (if (or (eq? (caddar entrance) limits)  (eq? (caddar entrance) 1))
                     (maze->tree (car entrance) nodes)
                     (loop (cdr entrance) limits))))))
+                    
+;build tree                    
+(define (maze->tree entrance nodes)
+    ;remove entrance from the remaining nodes
+    (define leafs (remove entrance nodes))
+    (let loop
+        ([root entrance]
+        [leafs leafs]
+        [tree empty]
+        ;booleans to know if neighbor has been visited
+        [left #f]
+        [right #f]
+        [up #f]
+        [down #f])
+        (if (empty? leafs)
+            tree
+            ;add neighbors as children
+            (cond 
+                [(and (eq? right #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (append (list root) (list (caar leafs)))) left right up down)] ;caar to get ID
+                [(and (eq? left #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (append (list root) (list (caar leafs)))) left right up down)]
+                [(and (eq? up #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (append (list root) (list (caar leafs)))) left right up down)]
+                [(and (eq? down #t) (not (empty? root))) (loop (car leafs) (cdr leafs) (append tree (append (list root) (list (caar leafs)))) left right up down)]
+                [else
+                    (cond
+                    [(eq? (add1 (cadr root)) (cadar leafs)) (loop root leafs tree #f #t #f #f)] 
+                    [(eq? (sub1 (cadr root)) (cadar leafs)) (loop root leafs tree #t #f #f #f)]
+                    [(eq? (add1 (caddr root)) (caddar leafs)) (loop root leafs tree #f #f #f #t)]
+                    [(eq? (sub1 (caddr root)) (caddar leafs)) (loop root leafs tree #f #f #t #f)]
+                    [else   
+                        (loop '() tree left right up down)]) ]))))
     
 
 (define (see-nodes maze)

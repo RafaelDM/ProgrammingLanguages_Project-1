@@ -59,6 +59,22 @@
                     (maze->tree (car entrance) nodes)
                     (loop (cdr entrance) limits))))))
                     
+(define (sort-leafs entrance nodes)
+    (define leafs (remove entrance nodes))
+    leafs)
+    #|
+    (let loop
+        ([sortedLeafs (list entrance)]
+        [leafs leafs]
+        [root entrance])
+        (if (empty? leafs)
+            sortedLeafs
+            (if (and (or (eq? (cadr root) (cadar leafs)) (eq? (add1 (cadr root)) (cadar leafs)) (eq? (sub1 (cadr root)) (cadar leafs)))
+                (or (eq? (caddr root) (caddar leafs)) (eq? (add1 (caddr root)) (caddar leafs)) (eq? (sub1 (caddr root)) (caddar leafs))))
+                (loop (append sortedLeafs (list (car leafs))) (cdr leafs) (car leafs))
+                (loop sortedLeafs (cdr leafs) (car leafs))))))
+    |#
+                    
 ;build tree                    
 (define (maze->tree entrance nodes)
     ;remove entrance from the remaining nodes

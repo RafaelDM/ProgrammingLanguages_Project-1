@@ -6,9 +6,9 @@ Rafael Díaz Medina
 
 <h1> Description </h1>
 Ariadne's thread is a racket program that returns an exit path for any given maze with the shape of a matrix; for eaxample:
-
+</br>
 1 1 1 1 1 </br>
-1 1 1 0 0 </br>
+1 1 1 0 0 
 1 0 0 0 1 </br>   
 1 1 0 1 1 </br>
 1 1 0 1 1 </br>

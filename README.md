@@ -8,11 +8,11 @@ Rafael Díaz Medina
 Ariadne's thread is a racket program that returns an exit path for any given maze with the shape of a matrix; for eaxample:
 </br>
 
-1 1 1 1 1
-1 1 1 0 0
-1 0 0 0 1
-1 1 0 1 1
-1 1 0 1 1
+1 1 1 1 1 </br>
+1 1 1 0 0 </br>
+1 0 0 0 1 </br>   
+1 1 0 1 1 </br>
+1 1 0 1 1 </br>
 
 </br>
 <li> The maze must be fringed by 4 outer walls with anything but '1's for the exception of two '0's ; an entrance and an exit, that can be located anywhere, but must not exceed two.</li>
@@ -21,21 +21,21 @@ Ariadne's thread is a racket program that returns an exit path for any given maz
   (read-maze) as input. Then (newMaze maze) returns an updated maze like so: </li>
 </br>
 
-1 1 1 1 1
-1 1 1 0 2
-1 0 0 0 1
-1 1 0 1 1
-1 1 2 1 1 
+1 1 1 1 1 </br>
+1 1 1 0 2 </br>
+1 0 0 0 1 </br>
+1 1 0 1 1 </br>
+1 1 2 1 1 </br>
 
 <li> Along with other smaller functions, (newMaze) returns a maze with marked exits. </li>
 <li> (SealEntrance maze) changes the entrance of the maze from '2' to '3' so as to avoid inetrpretation of '2' as the exit like so: </li>
 </br>
 
-1 1 1 1 1
-1 1 1 0 3
-1 0 0 0 1
-1 1 0 1 1
-1 1 2 1 1 
+1 1 1 1 1 </br>
+1 1 1 0 3 </br>
+1 0 0 0 1 </br>
+1 1 0 1 1 </br>
+1 1 2 1 1 </br>
 
 <li> (SealEntrance) can take either of the '2's as entrances; in this case, the entrance is on the upper left. The final setup function is (findStart maze) which takes the output of (SealEntrance) to read the position, in x and y coordinates, of the adjacent '0' from which to begin creating the solution path. 
 In this case the ouput would be '(3 1) </li>

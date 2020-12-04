@@ -56,7 +56,7 @@ In this case the ouput would be '(3 1) </li>
 * When racket starts write the next command
 
         (enter! "Ariadne_thread.rkt")
-![](https://cdn.discordapp.com/attachments/778436643463364662/784226580049166346/unknown.png)
+    ![](https://cdn.discordapp.com/attachments/778436643463364662/784226580049166346/unknown.png)
 
 * After that you will be inside our proyect, you can use all our functions or go direct to main this will solve the maze that you give, you have to run this command
 

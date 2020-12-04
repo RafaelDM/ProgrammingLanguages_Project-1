@@ -37,7 +37,7 @@ Rafael Díaz Medina
 
 <li> (SealEntrance) can take either of the '2's as entrances; in this case, the entrance is on the upper left. The final setup function is (findStart maze) which takes the output of (SealEntrance) to read the position, in x and y coordinates, of the adjacent '0' from which to begin creating the solution path. 
 In this case the ouput would be '(3 1) </li>
-<li> To find the path the recursive (dfs maze x y) method reads neighbors either on the left, right, down or upper side until it finds the '2' exit. Once done, it prints the path by substituting 0s with the respective arrows that indicate the direction to follow. </li>
+<li> To find the path the recursive (dfs maze x y) method reads neighbors either on the left, right, down, or upper side until it finds the '2' exit. Once done, it prints the path by substituting 0s with the respective arrows to indicate the direction to follow. </li>
 <li> Finally, the (OutMaze filename list) takes the list of lists; the maze, and an output file to write down the maze with the printed path. </li>
 
 

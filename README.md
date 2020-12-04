@@ -1,4 +1,4 @@
-# ProgrammingLanguages_Project
+# Ariadne's Thread
 
 Daniel Atilano Casillas
 Rafael Díaz Medina 

@@ -73,10 +73,10 @@
 ;Once the entrance is reached, change "2" to "3" so as not to interpret it as an exit. 
 (define (SealEntrance maze)
     (cond
+    [(index-of (car (read-maze maze)) "2") (list->file (changer (read-maze maze) (index-of (car (read-maze maze)) "2") 0 "3") "fMaze.txt")] ;** Up
     [(index-of (car (columnMaze maze)) "2") (list->file (columnMaze (leftColumn maze)) "fMaze.txt")] ;** Left
     [(index-of (last (columnMaze maze)) "2") (list->file (columnMaze (rightColumn maze)) "fMaze.txt")] ;** Right
     [(index-of (last (read-maze maze)) "2") (list->file (changer (read-maze maze) (index-of (last (read-maze maze)) "2") (- (length (read-maze maze)) 1) "3") "fMaze.txt")] ;** Down
-    [(index-of (car (read-maze maze)) "2") (list->file (changer (read-maze maze) (index-of (car (read-maze maze)) "2") 0 "3") "fMaze.txt")] ;** Up
     ))
 
 ;Then find the adjacent node.
@@ -147,6 +147,16 @@
     (define changeX(list-set changeY x s))
     (define resultMaze(list-set maze y changeX))
     resultMaze)
+    
+;*** This function is the helper of Test
+(define (checker ansMaze)
+    (define lista(read-maze ansMaze))
+    (test lista))
+
+;**** This function help us to know if we have answer in our maze
+(define (test lists)
+  (filter (lambda (list) (or (member "∨" list) (member "∧" list) (member "<" list) (member ">" list)))
+          lists))
 
 ;function that runs the entire program
 (define (main maze)
@@ -157,4 +167,6 @@
     (newMaze ansMaze)
     (SealEntrance ansMaze)
     (helper-dfs ansMaze)
-    (display "The answer is in 'fmaze.txt' "))
+    (if (empty? (checker ansMaze))
+    (display "Invalid Maze")
+    (display "The answer is in 'fmaze.txt' ")))

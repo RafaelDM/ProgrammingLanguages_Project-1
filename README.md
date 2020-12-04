@@ -42,4 +42,20 @@ In this case the ouput would be '(3 1) </li>
 <li> Finally, the (OutMaze filename list) takes the list of lists; the maze, and an output file to write down the maze with the printed path. </li>
 
 
+## Instructions to compile
+* First of all download Racket
+        
+        sudo apt-get install -y racket.
+* Clone this repository
+        
+        git clone https://github.com/dans088/ProgrammingLanguages_Project.git
+
+* Inside the directory "ProgrammingLanguages" run Racket
+        
+        racket
+* When racket starts write the next command
+
+        (enter! "Ariadne_thread.rkt")
+* After that you will be inside our proyect, you can use all our functions or go direct to main this will solve the maze that you give
+
 

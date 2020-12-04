@@ -4,7 +4,7 @@ Daniel Atilano Casillas A01020270</br>
 Rafael Díaz Medina A01024592
 </br>
 
-<h1> Description </h1>
+<h2> Description </h2>
 <li> Ariadne's thread is a racket program that returns an exit path for any given maze with the shape of a matrix; for eaxample: </li>
 </br>
 

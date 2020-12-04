@@ -6,8 +6,8 @@ Rafael Díaz Medina
 
 <h1> Description </h1>
 <li> Ariadne's thread is a racket program that returns an exit path for any given maze with the shape of a matrix; for eaxample: </li>
-
 </br>
+
 1 1 1 1 1 </br>
 1 1 1 0 0 </br>
 1 0 0 0 1 </br>   
@@ -16,8 +16,7 @@ Rafael Díaz Medina
 
 <li> The maze must be fringed by 4 outer walls with anything but '1's for the exception of two '0's ; an entrance and an exit, that can be located anywhere, but must not exceed two.</li>
 
-<li> The method to read the maze by rows is (read-maze "filename.txt") where the filename is the input maze file. To read the maze by columns (columnMaze maze) uses the output of
-  (read-maze) as input. Then (newMaze maze) returns an updated maze like so: </li>
+<li> The method to read the maze by rows is (read-maze "filename.txt") where the filename is the input maze file. To read the maze by columns (columnMaze maze) uses the output of (read-maze) as input. Then (newMaze maze) returns an updated maze like so: </li>
 </br>
 
 1 1 1 1 1 </br>

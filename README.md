@@ -5,14 +5,13 @@ Rafael Díaz Medina
 </br>
 
 <h1> Description </h1>
-Ariadne's thread is a racket program that returns an exit path for any given maze with the shape of a matrix; for eaxample:
+<ul> Ariadne's thread is a racket program that returns an exit path for any given maze with the shape of a matrix; for eaxample: </ul>
 </br>
 1 1 1 1 1 </br>
 1 1 1 0 0 </br>
 1 0 0 0 1 </br>   
 1 1 0 1 1 </br>
-1 1 0 1 1
-</br>
+1 1 0 1 1 </br>
 
 <li> The maze must be fringed by 4 outer walls with anything but '1's for the exception of two '0's ; an entrance and an exit, that can be located anywhere, but must not exceed two.</li>
 

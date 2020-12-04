@@ -42,4 +42,34 @@ In this case the ouput would be '(3 1) </li>
 <li> The (main "filename.txt") method that runs the program and the function the user will ultimately type on the console. </li>
 
 
+## Instructions to compile
+* First of all download Racket
+        
+        sudo apt-get install -y racket.
+* Clone this repository
+        
+        git clone https://github.com/dans088/ProgrammingLanguages_Project.git
+
+* Inside the directory "ProgrammingLanguages" run Racket
+        
+        racket
+* When racket starts write the next command
+
+        (enter! "Ariadne_thread.rkt")
+![](https://cdn.discordapp.com/attachments/778436643463364662/784226580049166346/unknown.png)
+
+* After that you will be inside our proyect, you can use all our functions or go direct to main this will solve the maze that you give, you have to run this command
+
+        (main "{Name Of Your Maze}.txt")
+    * If you have a valid Maze you will get the next message
+
+    ![](https://cdn.discordapp.com/attachments/778436643463364662/784236568058527795/unknown.png)
+    
+    * If you have a invalid Maze you will get the next message
+
+    ![](https://cdn.discordapp.com/attachments/778436643463364662/784236686279442472/unknown.png)
+
+* This is the maze solved
+
+    ![](https://cdn.discordapp.com/attachments/778436643463364662/784236866256896010/unknown.png)
 

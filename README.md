@@ -39,6 +39,7 @@ Rafael Díaz Medina
 In this case the ouput would be '(3 1) </li>
 <li> To find the path the recursive (dfs maze x y) method reads neighbors either on the left, right, down, or upper side until it finds the '2' exit. Once done, it prints the path by substituting 0s with the respective arrows to indicate the direction to follow. </li>
 <li> Finally, the (OutMaze filename list) takes the list of lists; the maze, and an output file to write down the maze with the printed path. </li>
+<li> The (main "filename.txt") method that runs the program and the function the user will ultimately type on the console. </li>
 
 
 

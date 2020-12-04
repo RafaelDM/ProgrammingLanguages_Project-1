@@ -5,17 +5,32 @@
 
 #lang racket
 
-
-;***** Change Lines of the list of lists to new lines with 2 as exits
+;***** Find exits on the four outer walls and change them to 2
 (define (newMaze maze)
-    (define upperMaze (append (list (findUpper maze))(remove (car (read-maze maze)) (read-maze maze))))
-    (define lowMaze (append (remove (last upperMaze) upperMaze) (list (findLow maze))))
-    (list->file lowMaze "maze2.txt"))
-    (define leftMaze (append (list (findLeft "maze2.txt"))(remove (car (columnMaze "maze2.txt")) (columnMaze "maze2.txt"))))
-    #|(define rightMaze (append (remove (last leftMaze) leftMaze) (list (findRight "maze2.txt"))))
-    (list->file rightMaze "maze2.txt")
-    (define toTree (list->file (columnMaze "maze2.txt") "fMaze.txt"))
-    (read-maze "fMaze.txt"))|#
+    ;**** Replace 0 to 2 in our TopWall
+    (define upM(read-maze maze))
+    (cond[(index-of (car upM) "0") (list->file (changer upM (index-of (car upM) "0") 0 "2") maze)]); * Up
+    ;**** Replace 0 to 2 in our bottomWall
+    (define downM(read-maze maze))
+    (cond[(index-of (last downM) "0") (list->file (changer downM (index-of (last downM) "0") (- (length downM) 1) "2") maze)]);** Down
+    ;**** Replace 0 to 2 in our leftWall
+    (define leftM(columnMaze maze))
+    (cond[(index-of (car leftM) "0") (list->file (columnMaze (changeLeft maze)) maze)]);*** Left
+    ;***** Replace 0 to 2 in our rightWall
+    (define rightM(columnMaze maze))
+    (cond[(index-of (last rightM) "0") (list->file (columnMaze (changeRight maze)) maze)]))
+
+;helper for updating left column
+(define (changeLeft maze)
+    (define mazen(columnMaze maze))
+    (list->file (changer mazen (index-of (car mazen) "0") 0 "2") maze)
+    maze)
+;helper for updating Right column
+(define (changeRight maze)
+(define mazen(columnMaze maze))
+    (list->file (changer mazen (index-of (last mazen) "0") (- (length mazen) 1) "2") maze)
+    maze)
+
 
 ;*******************- Read Maze *****************************************
 ;** Read our maze line by Rows
@@ -52,33 +67,8 @@
           (unless (empty? (rest clone)) (display "\n" out))
           (loop (rest clone) out)))))
 
-;-----------------------------------------------------------------------------*
-
-;**** Find 0s in a list and change to 2
-(define (test data)
-    (if (list? data)
-        (map(lambda (lst) (test lst))data)
-        (if (equal? data "0")
-            "2"
-            data)))
-
 ;**********************************************************************************************-
 ;-------------------Functions to find entrance amonst the four outer walls
-;**** Replace 0 to 2 in our TopWall
-(define (findUpper maze)
-    (test (car (read-maze maze))))
-
-;**** Replace 0 to 2 in our bottomWall
-(define (findLow maze)
-    (test (last (read-maze maze))))
-
-;**** Replace 0 to 2 in our leftWall
-(define (findLeft maze)
-    (test (car (columnMaze maze))))
-
-;***** Replace 0 to 2 in our rightWall
-(define (findRight maze)
-    (test (last (columnMaze maze))))
 ;----------------------------------------------------------------------
 ;Once the entrance is reached, change "2" to "3" so as not to interpret it as an exit. 
 (define (SealEntrance maze)
@@ -111,12 +101,18 @@
     (list->file (changer (columnMaze maze) (index-of (last (columnMaze maze)) "2") (- (length (columnMaze maze)) 1) "3") "fMaze.txt")
     maze)
 
-;print resultMaze
-(define (outputListData list)
-  (cond 
-    [(null? list) #f]
-    [else (printf "~s\n" (first list))
-          (outputListData (rest list))]))
+;print resultMaze to Output file
+(define (OutMaze filename list)
+(define out (open-output-file filename #:exists 'truncate))
+        (let loop
+            ([list list]
+             [n 0])
+            (cond 
+                [(empty? list) (close-output-port out) n]
+                [else 
+                    (fprintf out "~a\n" (car list))
+                    (loop (cdr list) (add1 n))])))
+
 
 ;get entrance coordinates in x and y 
 (define(helper-dfs maze) 
@@ -126,17 +122,17 @@
     
 ;find alternative paths for the solution
 (define (dfs maze x y)
-    (let loop               ;loop that updates the maze with "*" for the 0s path only
+    (let loop               ;loop that updates the maze with ∧ ∨ < > arrows for the solution path only
     ([resultMaze maze]
     [x x]
     [y y])
     (if (string=? (finder resultMaze x y) "2")
-        (and (printf "-----------Solutions---------\n" ) (outputListData resultMaze))
+        (OutMaze "fMaze.txt" resultMaze)
         (begin          
-        (cond [(or (string=? (finder resultMaze (+ x 1) y) "0") (string=? (finder resultMaze (+ x 1) y) "2")) (loop (changer resultMaze x y "*") (+ x 1) y )])
-        (cond [(or (string=? (finder resultMaze (- x 1) y) "0") (string=? (finder resultMaze (- x 1) y) "2")) (loop (changer resultMaze x y "*") (- x 1) y)])
-        (cond [(or (string=? (finder resultMaze x (+ y 1)) "0") (string=? (finder resultMaze x (+ y 1)) "2")) (loop (changer resultMaze x y "*") x (+ y 1))])
-        (cond [(or (string=? (finder resultMaze x (- y 1)) "0") (string=? (finder resultMaze x (- y 1)) "2")) (loop (changer resultMaze x y "*") x (- y 1))])
+        (cond [(or (string=? (finder resultMaze (+ x 1) y) "0") (string=? (finder resultMaze (+ x 1) y) "2")) (loop (changer resultMaze x y ">") (+ x 1) y )])
+        (cond [(or (string=? (finder resultMaze (- x 1) y) "0") (string=? (finder resultMaze (- x 1) y) "2")) (loop (changer resultMaze x y "<") (- x 1) y)])
+        (cond [(or (string=? (finder resultMaze x (+ y 1)) "0") (string=? (finder resultMaze x (+ y 1)) "2")) (loop (changer resultMaze x y "∨") x (+ y 1))])
+        (cond [(or (string=? (finder resultMaze x (- y 1)) "0") (string=? (finder resultMaze x (- y 1)) "2")) (loop (changer resultMaze x y "∧") x (- y 1))])
         ))))
 
 ;returns value given x and y indexes
@@ -144,7 +140,8 @@
     (define findY(list-ref maze y))
     (list-ref findY x))
 
-;returns list with "*" chars 
+;generic function   
+;returns updated list with arrow chars or 0 to 2 
 (define (changer maze x y s)
     (define changeY(list-ref maze y))
     (define changeX(list-set changeY x s))
@@ -153,6 +150,11 @@
 
 ;function that runs the entire program
 (define (main maze)
-    (newMaze maze)
-    (SealEntrance "fMaze.txt")
-    (helper-dfs "fMaze.txt"))
+    (define copy(read-maze maze))
+    (define ansMaze "fMaze.txt")
+    (list->file copy ansMaze)
+    (newMaze ansMaze)
+    (newMaze ansMaze)
+    (SealEntrance ansMaze)
+    (helper-dfs ansMaze)
+    (display "The answer is in 'fmaze.txt' "))

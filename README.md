@@ -1,7 +1,7 @@
 # Ariadne's Thread
 
-Daniel Atilano Casillas
-Rafael Díaz Medina 
+Daniel Atilano Casillas A01020270</br>
+Rafael Díaz Medina A01024592
 </br>
 
 <h1> Description </h1>

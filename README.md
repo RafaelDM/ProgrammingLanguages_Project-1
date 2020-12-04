@@ -5,7 +5,7 @@ Rafael Díaz Medina
 </br>
 
 <h1> Description </h1>
-<ul> Ariadne's thread is a racket program that returns an exit path for any given maze with the shape of a matrix; for eaxample: </ul>
+<li> Ariadne's thread is a racket program that returns an exit path for any given maze with the shape of a matrix; for eaxample: </li>
 </br>
 1 1 1 1 1 </br>
 1 1 1 0 0 </br>
@@ -40,21 +40,5 @@ In this case the ouput would be '(3 1) </li>
 <li> To find the path the recursive (dfs maze x y) method reads neighbors either on the left, right, down or upper side until it finds the '2' exit. Once done, it prints the path by substituting 0s with the respective arrows that indicate the direction to follow. </li>
 <li> Finally, the (OutMaze filename list) takes the list of lists; the maze, and an output file to write down the maze with the printed path. </li>
 
-
-## Instructions to compile
-* First of all download Racket
-        
-        sudo apt-get install -y racket.
-* Clone this repository
-        
-        git clone https://github.com/dans088/ProgrammingLanguages_Project.git
-
-* Inside the directory "ProgrammingLanguages" run Racket
-        
-        racket
-* When racket starts write the next command
-
-        (enter! "Ariadne_thread.rkt")
-* After that you will be inside our proyect, you can use all our functions or go direct to main this will solve the maze that you give
 
 

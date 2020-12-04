@@ -8,32 +8,32 @@ Rafael Díaz Medina A01024592
 <li> Ariadne's thread is a racket program that returns an exit path for any given maze with the shape of a matrix; for eaxample: </li>
 </br>
 
-                                        1 1 1 1 1 
-                                        1 1 1 0 0
-                                        1 0 0 0 1    
-                                        1 1 0 1 1 
-                                        1 1 0 1 1
+                        1 1 1 1 1 
+                        1 1 1 0 0
+                        1 0 0 0 1    
+                        1 1 0 1 1 
+                        1 1 0 1 1
 
 <li> The maze must be fringed by 4 outer walls with anything but '1's for the exception of two '0's ; an entrance and an exit, that can be located anywhere, but must not exceed two.</li>
 
 <li> The method to read the maze by rows is (read-maze "filename.txt") where the filename is the input maze file. To read the maze by columns (columnMaze maze) uses the output of (read-maze) as input. Then (newMaze maze) returns an updated maze like so: </li>
 </br>
 
-                                        1 1 1 1 1
-                                        1 1 1 0 2 
-                                        1 0 0 0 1 
-                                        1 1 0 1 1
-                                        1 1 2 1 1
+                        1 1 1 1 1
+                        1 1 1 0 2 
+                        1 0 0 0 1 
+                        1 1 0 1 1
+                        1 1 2 1 1
 
 <li> Along with other smaller functions, (newMaze) returns a maze with marked exits. </li>
 <li> (SealEntrance maze) changes the entrance of the maze from '2' to '3' so as to avoid inetrpretation of '2' as the exit like so: </li>
 </br>
 
-                                        1 1 1 1 1
-                                        1 1 1 0 3
-                                        1 0 0 0 1
-                                        1 1 0 1 1 
-                                        1 1 2 1 1 
+                        1 1 1 1 1
+                        1 1 1 0 3
+                        1 0 0 0 1
+                        1 1 0 1 1 
+                        1 1 2 1 1 
 
 <li> (SealEntrance) can take either of the '2's as entrances; in this case, the entrance is on the upper left. The final setup function is (findStart maze) which takes the output of (SealEntrance) to read the position, in x and y coordinates, of the adjacent '0' from which to begin creating the solution path. 
 In this case the ouput would be '(3 1) </li>
@@ -50,7 +50,7 @@ In this case the ouput would be '(3 1) </li>
         
         git clone https://github.com/dans088/ProgrammingLanguages_Project.git
 
-* Inside the directory "ProgrammingLanguages" run Racket
+* On the directory "ProgrammingLanguages" run Racket
         
         racket
 * When racket starts write the next command
@@ -58,18 +58,18 @@ In this case the ouput would be '(3 1) </li>
         (enter! "Ariadne_thread.rkt")
     ![](https://cdn.discordapp.com/attachments/778436643463364662/784226580049166346/unknown.png)
 
-* After that you will be inside our proyect, you can use all our functions or go direct to main this will solve the maze that you give, you have to run this command
+* Then you are ready to use the program. Now type in the main method to solve the maze that you have
 
         (main "{Name Of Your Maze}.txt")
-    * If you have a valid Maze you will get the next message
+    * If the maze is valid the next message will be shown
 
     ![](https://cdn.discordapp.com/attachments/778436643463364662/784236568058527795/unknown.png)
     
-    * If you have a invalid Maze you will get the next message
+    * Otherwise the next message will appear
 
     ![](https://cdn.discordapp.com/attachments/778436643463364662/784236686279442472/unknown.png)
 
-* This is the maze solved
+* Output maze
 
     ![](https://cdn.discordapp.com/attachments/778436643463364662/784236866256896010/unknown.png)
 

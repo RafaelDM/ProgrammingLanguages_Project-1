@@ -31,7 +31,6 @@
     (list->file (changer mazen (index-of (last mazen) "0") (- (length mazen) 1) "2") maze)
     maze)
 
-
 ;*******************- Read Maze *****************************************
 ;** Read our maze line by Rows
 (define (read-maze filename)
@@ -45,8 +44,6 @@
                 [else 
                     (loop (read-line in 'any) (append maze (for/list () (string-split lines " "))) (add1 size))])))
                     
-
-
 ;** Read our Maze by Columns
 (define (columnMaze maze)
     (define columnList(read-maze maze))
@@ -101,6 +98,7 @@
     (list->file (changer (columnMaze maze) (index-of (last (columnMaze maze)) "2") (- (length (columnMaze maze)) 1) "3") "fMaze.txt")
     maze)
 
+
 ;print resultMaze to Output file
 (define (OutMaze filename list)
 (define out (open-output-file filename #:exists 'truncate))
@@ -122,18 +120,18 @@
     
 ;find alternative paths for the solution
 (define (dfs maze x y)
-    (let loop               ;loop that updates the maze with ∧ ∨ < > arrows for the solution path only
+    (let/ec return (let loop        ;loop that updates the maze with ∧ ∨ < > arrows for the solution path only
     ([resultMaze maze]
     [x x]
     [y y])
     (if (string=? (finder resultMaze x y) "2")
-        (OutMaze "fMaze.txt" resultMaze)
-        (begin          
+        (return (OutMaze "fMaze.txt" resultMaze))
+        (begin
+        (cond [(or (string=? (finder resultMaze x (- y 1)) "0") (string=? (finder resultMaze x (- y 1)) "2")) (loop (changer resultMaze x y "∧") x (- y 1))])
+        (cond [(or (string=? (finder resultMaze x (+ y 1)) "0") (string=? (finder resultMaze x (+ y 1)) "2")) (loop (changer resultMaze x y "∨") x (+ y 1))])
         (cond [(or (string=? (finder resultMaze (+ x 1) y) "0") (string=? (finder resultMaze (+ x 1) y) "2")) (loop (changer resultMaze x y ">") (+ x 1) y )])
         (cond [(or (string=? (finder resultMaze (- x 1) y) "0") (string=? (finder resultMaze (- x 1) y) "2")) (loop (changer resultMaze x y "<") (- x 1) y)])
-        (cond [(or (string=? (finder resultMaze x (+ y 1)) "0") (string=? (finder resultMaze x (+ y 1)) "2")) (loop (changer resultMaze x y "∨") x (+ y 1))])
-        (cond [(or (string=? (finder resultMaze x (- y 1)) "0") (string=? (finder resultMaze x (- y 1)) "2")) (loop (changer resultMaze x y "∧") x (- y 1))])
-        ))))
+        )))))
 
 ;returns value given x and y indexes
 (define(finder maze x y)

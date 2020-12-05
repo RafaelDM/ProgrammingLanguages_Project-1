@@ -117,7 +117,8 @@
     (define entrance(findStart maze))
     (define solver(dfs (read-maze maze) (car entrance) (last entrance)))
     solver)
-    
+
+;** The new Function let/ec breaks our recursivity if one of the conditions is valid and stops the others
 ;find alternative paths for the solution
 (define (dfs maze x y)
     (let/ec return (let loop        ;loop that updates the maze with ∧ ∨ < > arrows for the solution path only
@@ -127,10 +128,10 @@
     (if (string=? (finder resultMaze x y) "2")
         (return (OutMaze "fMaze.txt" resultMaze))
         (begin
-        (cond [(or (string=? (finder resultMaze x (- y 1)) "0") (string=? (finder resultMaze x (- y 1)) "2")) (loop (changer resultMaze x y "∧") x (- y 1))])
-        (cond [(or (string=? (finder resultMaze x (+ y 1)) "0") (string=? (finder resultMaze x (+ y 1)) "2")) (loop (changer resultMaze x y "∨") x (+ y 1))])
-        (cond [(or (string=? (finder resultMaze (+ x 1) y) "0") (string=? (finder resultMaze (+ x 1) y) "2")) (loop (changer resultMaze x y ">") (+ x 1) y )])
-        (cond [(or (string=? (finder resultMaze (- x 1) y) "0") (string=? (finder resultMaze (- x 1) y) "2")) (loop (changer resultMaze x y "<") (- x 1) y)])
+        (cond [(or (string=? (finder resultMaze x (- y 1)) "0") (string=? (finder resultMaze x (- y 1)) "2")) (loop (changer resultMaze x y " ") x (- y 1))])
+        (cond [(or (string=? (finder resultMaze x (+ y 1)) "0") (string=? (finder resultMaze x (+ y 1)) "2")) (loop (changer resultMaze x y " ") x (+ y 1))])
+        (cond [(or (string=? (finder resultMaze (- x 1) y) "0") (string=? (finder resultMaze (- x 1) y) "2")) (loop (changer resultMaze x y " ") (- x 1) y)])
+        (cond [(or (string=? (finder resultMaze (+ x 1) y) "0") (string=? (finder resultMaze (+ x 1) y) "2")) (loop (changer resultMaze x y " ") (+ x 1) y )])
         )))))
 
 ;returns value given x and y indexes
@@ -153,7 +154,7 @@
 
 ;**** This function help us to know if we have answer in our maze
 (define (test lists)
-  (filter (lambda (list) (or (member "∨" list) (member "∧" list) (member "<" list) (member ">" list)))
+  (filter (lambda (list) (member "" list))
           lists))
 
 ;function that runs the entire program

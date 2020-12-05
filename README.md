@@ -71,5 +71,5 @@ In this case the ouput would be '(3 1) </li>
 
 * Output maze
 
-    ![](https://cdn.discordapp.com/attachments/778436643463364662/784236866256896010/unknown.png)
+    ![image](https://user-images.githubusercontent.com/21222851/101233927-e2940f80-3680-11eb-8c2a-ee030bb9a1d2.png)
 
